@@ -1,7 +1,8 @@
 // src/services/api.js
 import axios from "axios";
 
-const API_URL = "https://localhost:7265/api"; // Adjust to your API’s base URL
+// If REACT_APP_API_URL is set, use it; otherwise default to window.location.origin + "/api"
+const API_URL = process.env.REACT_APP_API_URL || `${window.location.origin}/api`;
 
 const api = axios.create({
   baseURL: API_URL,
