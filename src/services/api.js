@@ -1,15 +1,15 @@
 // src/services/api.js
 import axios from "axios";
 
-// If REACT_APP_API_URL is set, use it; otherwise default to window.location.origin + "/api"
-const API_URL = process.env.REACT_APP_API_URL || `${window.location.origin}/api`;
+// Hard‐coded API base URL
+const API_URL = "http://192.168.1.143/api";
 
 const api = axios.create({
   baseURL: API_URL,
   headers: { "Content-Type": "application/json" }
 });
 
-// Request interceptor to attach JWT if present
+// Attach JWT if present
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -21,12 +21,12 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor to catch network/server errors
+// Alert if server is unreachable
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      alert("Cannot communicate with the server. Please ensure the API is running.");
+      alert("Cannot communicate with the server. Please ensure the API at http://192.168.1.143 is running.");
     }
     return Promise.reject(error);
   }
